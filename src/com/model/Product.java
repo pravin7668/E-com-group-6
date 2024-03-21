@@ -9,14 +9,7 @@ public class Product {
 	private int vendorId;
 	public Product() {
 		super();
-	}
-	public Product(String name, double price, String description, int stockQuantity, int vendorId) {
-		super();
-		this.name = name;
-		this.price = price;
-		this.description = description;
-		this.stockQuantity = stockQuantity;
-		this.vendorId = vendorId;
+		// TODO Auto-generated constructor stub
 	}
 	public Product(int id, String name, double price, String description, int stockQuantity, int vendorId) {
 		super();
@@ -26,6 +19,19 @@ public class Product {
 		this.description = description;
 		this.stockQuantity = stockQuantity;
 		this.vendorId = vendorId;
+	}
+	public Product(String name, double price, String description, int stockQuantity, int vendorId) {
+		super();
+		this.name = name;
+		this.price = price;
+		this.description = description;
+		this.stockQuantity = stockQuantity;
+		this.vendorId = vendorId;
+	}
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", description=" + description
+				+ ", stockQuantity=" + stockQuantity + ", vendorId=" + vendorId + "]";
 	}
 	public int getId() {
 		return id;
@@ -63,10 +69,6 @@ public class Product {
 	public void setVendorId(int vendorId) {
 		this.vendorId = vendorId;
 	}
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", description=" + description
-				+ ", stockQuantity=" + stockQuantity + ", vendorId=" + vendorId + "]";
-	}
-	
+
+
 }
