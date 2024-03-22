@@ -9,9 +9,9 @@ public class DBUtil {
 
 	public static Connection getDBConn() {
 		String userNameDb = "root";
-		String passwordDb = "";
+		String passwordDb = "pravin766899";
 		String urlDb = "jdbc:mysql://localhost:3306/ecom";
-		String driverName = "com.mysql.jdbc.Driver";
+		String driverName = "com.mysql.cj.jdbc.Driver";
 		try {
 			Class.forName(driverName);
 			//System.out.println("Driver Loaded..");
