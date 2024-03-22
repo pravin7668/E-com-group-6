@@ -23,7 +23,7 @@ public interface OrdersDao {
 
 	public List<Product> fetchAllProducts();
 
-	public List<Orders> getOrderInRange(LocalDate startDate, LocalDate endDate);
+	public List<Orders> getOrderInRange(LocalDate startDate, LocalDate endDate) throws SQLException;
 	
 	
 }

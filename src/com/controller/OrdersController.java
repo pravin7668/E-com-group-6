@@ -25,9 +25,9 @@ public class OrdersController {
 				System.out.println("Press 4 to Update Order item");
 				System.out.println("Press 5 to Display Orders by date range");
 				System.out.println("Press 0 to Exit");
-				System.out.println("**********************************");
+				System.out.println("********************************************");
 				int input = sc.nextInt();
-				if (input==0) {
+				if (input == 0) {
 					System.out.println("Terminated");
 					break;
 				}
@@ -57,7 +57,7 @@ public class OrdersController {
 					List<Product> list2 = ordersService.fetchAllProducts();
 
 					for (Product e : list2) {
-						System.out.println(e.getId() + "   " + e.getName()+"    "+"Available stock   "+e.getStockQuantity()+"Price/product"+"   "+e.getPrice());
+						System.out.println(e.getId() + "   " + e.getName()+"   "+e.getDescription()+"    "+"Available stock   "+e.getStockQuantity()+"Price/product"+"   "+e.getPrice());
 					}
 					System.out.println("Give the Id of the Product you want to Buy ");
 					int productId = sc.nextInt();
@@ -121,6 +121,7 @@ public class OrdersController {
 				
 			}
 		}
+		sc.close();
 		
 	}
 }
