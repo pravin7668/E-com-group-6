@@ -10,11 +10,13 @@ import com.model.Orders;
 import com.model.Product;
 import com.dao.OrdersDao;
 import com.dao.OrdersDaoImpl;
+import com.dao.ProductDao;
+import com.dao.ProductDaoImpl;
 import com.exception.InvalidIdException;
 
 public class OrdersService {
 	OrdersDao ordersdao=new OrdersDaoImpl();
-
+	ProductDao pd = new ProductDaoImpl();
 	public List<Orders> getOrderDetailsOfCustomer(int cid) throws SQLException {
 		List<Orders> list=new ArrayList<Orders>();
 		list=ordersdao.getOrderDetailsOfCustomer(cid);
@@ -27,9 +29,9 @@ public class OrdersService {
 		}
 
 
-	public List<Product> fetchAllProducts() {
+	public List<Product> fetchAllProducts() throws SQLException {
 		
-		return ordersdao.fetchAllProducts();
+		return pd.displayProductDetails();
 	}
 
 	public boolean checkIfProductAvailable(List<Product> list2, int numOfItems, int productId) {
@@ -70,7 +72,7 @@ public class OrdersService {
 		return list1;
 	}
 
-	public List<Orders> getOrderInRange(LocalDate startDate, LocalDate endDate) {
+	public List<Orders> getOrderInRange(LocalDate startDate, LocalDate endDate) throws SQLException {
 		List<Orders> list3=new ArrayList<Orders>();
 		list3 = ordersdao.getOrderInRange(startDate,endDate);
 		return list3;

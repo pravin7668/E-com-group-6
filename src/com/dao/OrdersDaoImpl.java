@@ -106,7 +106,7 @@ public class OrdersDaoImpl implements OrdersDao{
 		return orderList;
 	}
 	
-	public List<Orders> getOrdersByDateRange(LocalDate startDate, LocalDate endDate) throws SQLException {
+	public List<Orders> getOrderInRange(LocalDate startDate, LocalDate endDate) throws SQLException {
 		  Connection conn = DBUtil.getDBConn();
 		  try {
 		    String sql = "SELECT * FROM orders WHERE order_date BETWEEN ? AND ?";
@@ -128,6 +128,7 @@ public class OrdersDaoImpl implements OrdersDao{
 		    DBUtil.dbClose();
 		  }
 		}
+	
 
 	
 	}
