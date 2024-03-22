@@ -8,7 +8,8 @@ import com.model.Customer;
 import com.service.CustomerService;
 
 public class CustomerController {
-	public static void main(String[] args) {
+	public static void customerController(int id) {
+
 		CustomerService customerService = new CustomerService();
 		Scanner sc = new Scanner(System.in);
 		while (true) {
@@ -22,15 +23,15 @@ public class CustomerController {
 			System.out.println("********************************************");
 			int input = sc.nextInt();
 			if (input == 0) {
-				System.out.println("Poitu Varen da Maaplaa");
+				System.out.println("Logging Out Thank You !!!");
 				break;
 			}
 
 			switch (input) {
 
 			case 1:
-				System.out.println("Enter your Customer ID");
-				int cid1 = sc.nextInt();
+//				System.out.println("Enter your Customer ID");
+//				int cid1 = sc.nextInt();
 
 				System.out.println("Press 1 to update Name");
 				System.out.println("Press 2 to update Email");
@@ -44,7 +45,7 @@ public class CustomerController {
 					String name = sc.nextLine();
 					try {
 
-						customerService.updateName(cid1, name);
+						customerService.updateName(id, name);
 						System.out.println("update Succesfull");
 					} catch (SQLException e) {
 						e.printStackTrace();
@@ -57,7 +58,7 @@ public class CustomerController {
 					String email = sc.nextLine();
 					try {
 
-						customerService.updateEmail(cid1, email);
+						customerService.updateEmail(id, email);
 						System.out.println("update Succesfull");
 					} catch (SQLException e) {
 						e.printStackTrace();
@@ -70,7 +71,7 @@ public class CustomerController {
 					String password = sc.nextLine();
 					try {
 
-						customerService.updatePassword(cid1, password);
+						customerService.updatePassword(id, password);
 						System.out.println("update Succesfull");
 					} catch (SQLException e) {
 						e.printStackTrace();
@@ -90,9 +91,13 @@ public class CustomerController {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
+				break;
 
+		
+	
 			}
+
 		}
-		sc.close();
+
 	}
 }
