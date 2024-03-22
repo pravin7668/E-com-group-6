@@ -54,4 +54,51 @@ public class ProductDaoImpl implements ProductDao{
 		DBUtil.dbClose();
 		return list;
 	}
+		
+		@Override
+		public List<Product> displaysortProductDetails() throws SQLException {
+			Connection conn=DBUtil.getDBConn();
+			List<Product> list3 = new ArrayList<>();
+			String sql = "select * from product order by price ASC";
+			PreparedStatement pstmt=conn.prepareStatement(sql);
+			ResultSet rst = pstmt.executeQuery();
+			while (rst.next()) { //if id is present in the DB, I vl give customer obj else will throw InvalidIdException
+				int productId= rst.getInt("id");
+				String name = rst.getString("name");
+				Double price = rst.getDouble("price");
+				String description = rst.getString("description");
+				int stockQuantity = rst.getInt("stock_quantity");
+				int vendorId = rst.getInt("vendor_id");
+				/*save it in an object*/
+				
+				Product pd = new Product(productId,name,price,description,stockQuantity,vendorId);
+				list3.add(pd);
+			}
+			DBUtil.dbClose();
+			return list3;
+		}
+
+		@Override
+		public List<Product> displaydescsortProductDetails() throws SQLException {
+			// TODO Auto-generated method stub
+			Connection conn=DBUtil.getDBConn();
+			List<Product> list3 = new ArrayList<>();
+			String sql = "select * from product order by price DESC";
+			PreparedStatement pstmt=conn.prepareStatement(sql);
+			ResultSet rst = pstmt.executeQuery();
+			while (rst.next()) { //if id is present in the DB, I vl give customer obj else will throw InvalidIdException
+				int productId= rst.getInt("id");
+				String name = rst.getString("name");
+				Double price = rst.getDouble("price");
+				String description = rst.getString("description");
+				int stockQuantity = rst.getInt("stock_quantity");
+				int vendorId = rst.getInt("vendor_id");
+				/*save it in an object*/
+				
+				Product pd = new Product(productId,name,price,description,stockQuantity,vendorId);
+				list3.add(pd);
+			}
+			DBUtil.dbClose();
+			return list3;
+	}
 }

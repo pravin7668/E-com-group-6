@@ -17,12 +17,23 @@ public class ProductService {
 		
 	}
 
-	
-
 
 	public List<Product> displayProductDetails() throws SQLException {
 		// TODO Auto-generated method stub
 		return pd.displayProductDetails();
 	}
+	
+
+	public List<Product> displaysortProductDetails(List<Product> list3, String order) throws SQLException {
+		// TODO Auto-generated method stub
+		return pd.displaysortProductDetails();
+	}
+
+
+	public List<Product> displaydescsortProductDetails(List<Product> list3, String order) throws SQLException{
+		// TODO Auto-generated method stub
+		return pd.displaydescsortProductDetails();
+	}
+	
 
 }
