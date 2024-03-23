@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import com.exception.CustomerNotFoundException;
 import com.model.Customer;
+import com.model.User;
 import com.service.AuthenticationService;
 
 public class AuthenticationController {
@@ -39,10 +40,14 @@ public class AuthenticationController {
 					String password = sc.nextLine();
 					System.out.println("Enter Confirm Password");
 					String confirmPassword = sc.nextLine();
-					boolean passwordCorrect = authenticationService.checkConfirmPassword(password, confirmPassword);
-					if (passwordCorrect) {
+					boolean confirmPasswordCorrect = authenticationService.checkConfirmPassword(password,
+							confirmPassword);
+					if (confirmPasswordCorrect) {
 						System.out.println("Sign Up Completed....You Can Login :)");
+						System.out.println();
 						try {
+							String role = "CUSTOMER";
+							authenticationService.addUser(email, password, role);
 							authenticationService.addCustomer(name, email, password);
 						} catch (SQLException e) {
 							e.printStackTrace();
@@ -53,73 +58,77 @@ public class AuthenticationController {
 
 					}
 				}
+				break;
 
 			case 3:
-				System.out.println("Press 1 for Customer Login");
-				System.out.println("Press 2 for Vendor Login");
-				int login = sc.nextInt();
-				if (login == 1) {
-					System.out.println("Enter Your Email");
-					sc.nextLine();
-					String cEmail = sc.nextLine();
-					try {
-						Customer c = authenticationService.validateEmail(cEmail);
 
-						System.out.println("Enter Your Password");
-						String cPassword = sc.nextLine();
-						boolean passwordCorrect = authenticationService.validatePassword(c, cPassword);
+				System.out.println("Enter Your Email");
+				sc.nextLine();
+				String cEmail = sc.nextLine();
+				try {
+					User user = authenticationService.validateEmail(cEmail);
+					Customer customer = authenticationService.getCustomerId(cEmail);
 
-						if (passwordCorrect) {
-							CustomerController.customerController(c.getId());
+					System.out.println("Enter Your Password");
+					String userPassword = sc.nextLine();
+					boolean isUserPasswordCorrect = authenticationService.validatePassword(user, userPassword);
+
+					if (isUserPasswordCorrect) {
+
+						if (user.getRole().equalsIgnoreCase("CUSTOMER")) {
+							CustomerController.customerController(customer);
 							break;
-
 						}
-						while (!passwordCorrect) {
-							System.out.println("Press 1 to Login Again");
-							System.out.println("Press 2 to Reset Your Password");
-							int passwordReset = sc.nextInt();
-							if (passwordReset == 2) {
-								System.out.println("Enter Your Email");
-								sc.nextLine();
-								cEmail = sc.nextLine();
-								c = authenticationService.validateEmail(cEmail);
-								System.out.println("Enter Your New Password");
-								cPassword = sc.nextLine();
-								System.out.println("Enter New Confirm Password");
-								String confirmPassword = sc.nextLine();
-								boolean passwordCorrect1 = authenticationService.checkConfirmPassword(cPassword,
-										confirmPassword);
-								if (passwordCorrect1) {
-									authenticationService.updatePassword(cEmail, cPassword);
-									System.out.println("Password Reset Successful");
 
-								} else {
-									System.out.println("Password and Confirm Password Mismatch");
-								}
+					}
+					while (!isUserPasswordCorrect) {
+						System.out.println("Press 1 to Login Again");
+						System.out.println("Press 2 to Reset Your Password");
+						int passwordReset = sc.nextInt();
+						if (passwordReset == 2) {
+							System.out.println("Enter Your Email");
+							sc.nextLine();
+							cEmail = sc.nextLine();
+							user = authenticationService.validateEmail(cEmail);
+							System.out.println("Enter Your New Password");
+							userPassword = sc.nextLine();
+							System.out.println("Enter New Confirm Password");
+							String confirmPassword = sc.nextLine();
+							boolean isPasswordCorrect = authenticationService.checkConfirmPassword(userPassword,
+									confirmPassword);
+							if (isPasswordCorrect) {
+								authenticationService.updateUserPassword(cEmail, userPassword);
+								authenticationService.updatePassword(cEmail, userPassword);
+								System.out.println("Password Reset Successful");
+
+							} else {
+								System.out.println("Password and Confirm Password Mismatch");
 							}
-							if (passwordReset == 1) {
-								System.out.println("Enter Your Email");
-								sc.nextLine();
-								cEmail = sc.nextLine();
-								c = authenticationService.validateEmail(cEmail);
+						}
+						if (passwordReset == 1) {
+							System.out.println("Enter Your Email");
+							sc.nextLine();
+							cEmail = sc.nextLine();
+							user = authenticationService.validateEmail(cEmail);
 
-								System.out.println("Enter Your Password");
-								cPassword = sc.nextLine();
-								passwordCorrect = authenticationService.validatePassword(c, cPassword);
+							System.out.println("Enter Your Password");
+							userPassword = sc.nextLine();
+							isUserPasswordCorrect = authenticationService.validatePassword(user, userPassword);
 
-								if (passwordCorrect) {
-									CustomerController.customerController(c.getId());
+							if (isUserPasswordCorrect) {
+								if (user.getRole().equalsIgnoreCase("CUSTOMER")) {
+									CustomerController.customerController(customer);
 									break;
 								}
 
 							}
 						}
 
-					} catch (SQLException | CustomerNotFoundException e) {
-						System.out.println(e.getMessage());
 					}
-
+				} catch (SQLException | CustomerNotFoundException e) {
+					System.out.println(e.getMessage());
 				}
+
 			}
 		}
 	}

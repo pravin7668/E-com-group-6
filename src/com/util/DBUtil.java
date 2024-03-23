@@ -9,7 +9,7 @@ public class DBUtil {
 
 	public static Connection getDBConn() {
 		String userNameDb = "root";
-		String passwordDb = "root";
+		String passwordDb = "pravin766899";
 		String urlDb = "jdbc:mysql://localhost:3306/ecom";
 		String driverName = "com.mysql.cj.jdbc.Driver";
 		try {

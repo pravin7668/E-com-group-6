@@ -6,6 +6,7 @@ import com.dao.AuthenticationDao;
 import com.dao.AuthenticationDaoImpl;
 import com.exception.CustomerNotFoundException;
 import com.model.Customer;
+import com.model.User;
 
 public class AuthenticationService {
 	AuthenticationDao authenticationDao=new AuthenticationDaoImpl();
@@ -20,12 +21,12 @@ public class AuthenticationService {
 		authenticationDao.addCustomer(name,email,password);
 	}
 
-	public Customer validateEmail(String cEmail) throws SQLException, CustomerNotFoundException {
+	public User validateEmail(String cEmail) throws SQLException, CustomerNotFoundException {
 		return authenticationDao.validateEmail(cEmail);
 	}
 
-	public boolean validatePassword(Customer c, String cPassword) {
-		if(c.getPassword().equals(cPassword)) {
+	public boolean validatePassword(User user, String cPassword) {
+		if(user.getPassword().equals(cPassword)) {
 			return true;
 		}
 		return false;
@@ -34,6 +35,19 @@ public class AuthenticationService {
 	public void updatePassword(String cEmail, String cPassword) throws SQLException {
 		authenticationDao.updatePassword(cEmail,cPassword);
 		
+	}
+
+	public void addUser(String email, String password, String role) throws SQLException {
+		authenticationDao.addUser(email,password,role);
+	}
+
+	public Customer getCustomerId(String cEmail) throws SQLException, CustomerNotFoundException{
+		
+		return authenticationDao.getCustomerId(cEmail);
+	}
+
+	public void updateUserPassword(String cEmail, String userPassword) throws SQLException{
+		authenticationDao.updateUserPassword(cEmail, userPassword);
 	}
 
 }

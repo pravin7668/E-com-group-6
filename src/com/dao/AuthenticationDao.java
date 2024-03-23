@@ -4,13 +4,20 @@ import java.sql.SQLException;
 
 import com.exception.CustomerNotFoundException;
 import com.model.Customer;
+import com.model.User;
 
 public interface AuthenticationDao {
 
 	void addCustomer(String name, String email, String password) throws SQLException;
 
-	Customer validateEmail(String cEmail) throws SQLException,CustomerNotFoundException;
+	User validateEmail(String cEmail) throws SQLException,CustomerNotFoundException;
 
 	void updatePassword(String cEmail, String cPassword) throws SQLException;
+
+	void addUser(String email, String password, String role) throws SQLException;
+
+	Customer getCustomerId(String cEmail) throws SQLException,CustomerNotFoundException;
+
+	void updateUserPassword(String cEmail, String userPassword) throws SQLException;
 
 }
