@@ -11,32 +11,32 @@ import com.model.Vendor;
 public class VendorService {
 	VendorDaoImpl vendorDao=new VendorDaoImpl();
 
-	public void insertvendor(String name, String email, String password, String address) throws SQLException {
-		vendorDao.insertvendor(name,email,password,address);
+	public void insertVendor(String name, String email, String password, String address) throws SQLException {
+		vendorDao.insertVendor(name,email,password,address);
 	}
 
-	public void insertproduct(int vid, String pname, double price, String description, int stock_quantity)throws SQLException {
+	public void insertProduct(int vid, String pname, double price, String description, int stock_quantity)throws SQLException {
 		
-		vendorDao.insertproduct(vid,pname,price,description,stock_quantity);
-		
-	}
-
-	public void updateproduct(int vid, String pname, double price, String description, int stock_quantity)throws SQLException {
-		vendorDao.updateproduct(vid,pname,price,description,stock_quantity);
-	}
-
-	public Vendor displayproducts(int vid) throws SQLException {
-		return vendorDao.displayproducts(vid);
+		vendorDao.insertProduct(vid,pname,price,description,stock_quantity);
 		
 	}
 
-	public List<Vendor> displayallvendor() throws SQLException{
-		
-		return vendorDao.displayallvendor();
+	public void updateProduct(int vid, String pname, double price, String description, int stock_quantity)throws SQLException {
+		vendorDao.updateProduct(vid,pname,price,description,stock_quantity);
 	}
 
-	public Vendor searchvendor(String name) throws SQLException{
-		return vendorDao.searchvendor(name);
+	public Vendor displayProducts(int vid) throws SQLException {
+		return vendorDao.displayProducts(vid);
+		
+	}
+
+	public List<Vendor> displayAllVendor() throws SQLException{
+		
+		return vendorDao.displayAllVendor();
+	}
+
+	public Vendor searchVendor(String name) throws SQLException{
+		return vendorDao.searchVendor(name);
 	}
 
 }
