@@ -17,10 +17,10 @@ public class AuthenticationController {
 
 			System.out.println();
 			System.out.println("***AUHTNETICATION OPERATION***");
-			System.out.println("press 1. Sign up for Customer");
-			System.out.println("press 2. Sign up for Vendor");
-			System.out.println("press 3. Login");
-			System.out.println("press 0. Exit");
+			System.out.println("Press 1. Sign up for Customer");
+			System.out.println("Press 2. Sign up for Vendor");
+			System.out.println("Press 3. Login");
+			System.out.println("Press 0. Exit");
 			System.out.println("**************");
 			int input = sc.nextInt();
 			if (input == 0) {
@@ -60,6 +60,9 @@ public class AuthenticationController {
 				}
 				break;
 
+			case 2:
+				break;
+
 			case 3:
 
 				System.out.println("Enter Your Email");
@@ -76,8 +79,28 @@ public class AuthenticationController {
 					if (isUserPasswordCorrect) {
 
 						if (user.getRole().equalsIgnoreCase("CUSTOMER")) {
-							CustomerController.customerController(customer);
-							break;
+							while (true) {
+								System.out.println();
+								System.out.println("***OPERATIONS FOR CUSTOMER***");
+								System.out.println("Press 1 For CUSTOMER OPS");
+								System.out.println("Press 2 For PRODUCT OPS");
+								System.out.println("Press 3 For ORDERS OPS");
+								System.out.println("Press 4 For CART OPS");
+								System.out.println("Press 0 To Exit");
+
+								System.out.println("**************");
+								int input1 = sc.nextInt();
+								if (input1 == 0) {
+									System.out.println("Exiting....Thank you!!!");
+									break;
+								}
+								switch (input1) {
+								case 1:
+									CustomerController.customerController(customer);
+									break;
+								}
+
+							}
 						}
 
 					}

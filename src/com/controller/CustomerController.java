@@ -26,7 +26,7 @@ public class CustomerController {
 			System.out.println("********************************************");
 			int input = sc.nextInt();
 			if (input == 0) {
-				System.out.println("Logging Out Thank You !!!");
+				System.out.println("Thank You !!!");
 				break;
 			}
 
@@ -148,6 +148,7 @@ public class CustomerController {
 				break;
 			}
 			if (input == 0) {
+				
 				break;
 			}
 		}
