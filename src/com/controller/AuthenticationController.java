@@ -98,6 +98,12 @@ public class AuthenticationController {
 								case 1:
 									CustomerController.customerController(customer);
 									break;
+								case 2:
+									break;
+								case 3:
+									break;
+								case 4:
+									break;
 								}
 
 							}
