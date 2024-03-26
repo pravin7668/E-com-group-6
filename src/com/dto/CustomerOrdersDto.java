@@ -1,6 +1,25 @@
 package com.dto;
 
+import java.util.Objects;
+
 public class CustomerOrdersDto {
+@Override
+	public int hashCode() {
+		return Objects.hash(customerName, productName, quantity, totalPrice);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CustomerOrdersDto other = (CustomerOrdersDto) obj;
+		return Objects.equals(customerName, other.customerName) && Objects.equals(productName, other.productName)
+				&& quantity == other.quantity
+				&& Double.doubleToLongBits(totalPrice) == Double.doubleToLongBits(other.totalPrice);
+	}
 private String customerName;
 private String productName;
 private double totalPrice;

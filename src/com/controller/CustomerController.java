@@ -34,33 +34,33 @@ public class CustomerController {
 
 			case 1:
 
-				System.out.println("Press 1 to update Name");
-				System.out.println("Press 2 to update Email");
-				System.out.println("Press 3 to update Password");
+				System.out.println("Press 1 to Update Name");
+				System.out.println("Press 2 to Update Email");
+				System.out.println("Press 3 to Update Password");
 				int input1 = sc.nextInt();
 				switch (input1) {
 
 				case 1:
-					System.out.println("Enter Name to update");
+					System.out.println("Enter Name to Update");
 					sc.nextLine();
 					String name = sc.nextLine();
 					try {
 
 						customerService.updateName(customer.getId(), name);
-						System.out.println("update Succesfull");
+						System.out.println("Update Succesfull");
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
 
 					break;
 				case 2:
-					System.out.println("Enter Email to update");
+					System.out.println("Enter Email to Update");
 					sc.nextLine();
 					String email = sc.nextLine();
 					try {
 
 						customerService.updateEmail(customer.getId(), email);
-						System.out.println("update Succesfull");
+						System.out.println("Update Succesfull");
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -73,7 +73,7 @@ public class CustomerController {
 					try {
 
 						customerService.updatePassword(customer.getId(), password);
-						System.out.println("update Succesfull");
+						System.out.println("Update Succesfull");
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
