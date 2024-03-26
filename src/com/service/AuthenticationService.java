@@ -2,11 +2,14 @@ package com.service;
 
 import java.sql.SQLException;
 
+
 import com.dao.AuthenticationDao;
 import com.dao.AuthenticationDaoImpl;
 import com.exception.CustomerNotFoundException;
+import com.exception.VendorNotFoundException;
 import com.model.Customer;
 import com.model.User;
+import com.model.Vendor;
 
 public class AuthenticationService {
 	AuthenticationDao authenticationDao=new AuthenticationDaoImpl();
@@ -52,6 +55,11 @@ public class AuthenticationService {
 
 	public void addVendor(String name, String email, String password,String address)throws SQLException{
 		authenticationDao.addVendor(name,email,password,address);
+	}
+
+	public Vendor getVendorId(String cEmail) throws SQLException, VendorNotFoundException {
+		// TODO Auto-generated method stub
+		return authenticationDao.getVendorId(cEmail);
 	}
 
 }

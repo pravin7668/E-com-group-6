@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.exception.CustomerNotFoundException;
+import com.exception.VendorNotFoundException;
 import com.model.Customer;
 import com.model.User;
+import com.model.Vendor;
 import com.util.DBUtil;
 
 public class AuthenticationDaoImpl implements AuthenticationDao{
@@ -122,6 +124,26 @@ public class AuthenticationDaoImpl implements AuthenticationDao{
 		
 		DBUtil.dbClose();
 		
+	}
+
+	@Override
+	public Vendor getVendorId(String cEmail) throws SQLException, VendorNotFoundException {
+		Connection conn=DBUtil.getDBConn();
+		String sql="select * from vendor where email=?";
+		PreparedStatement pstmt=conn.prepareStatement(sql);
+		pstmt.setString(1, cEmail);
+		ResultSet rst=pstmt.executeQuery();
+		if (rst.next()) {
+			int id=rst.getInt("id");
+			String name=rst.getString("name");
+			String mail=rst.getString("email");
+			String password=rst.getString("password");
+			String address=rst.getString("address");
+
+			Vendor c=new Vendor(id,name,mail,password,address);
+			return c;
+		}
+		throw new VendorNotFoundException("Vendor Not Found");
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import com.controller.*;
 import com.dao.*;
 import com.dao.CustomerDaoImpl;
+import com.exception.VendorNotFoundException;
 import com.model.Vendor;
 
 public class VendorService {
@@ -35,7 +36,7 @@ public class VendorService {
 		return vendorDao.displayAllVendor();
 	}
 
-	public Vendor searchVendor(String name) throws SQLException{
+	public Vendor searchVendor(String name) throws SQLException,VendorNotFoundException {
 		return vendorDao.searchVendor(name);
 	}
 

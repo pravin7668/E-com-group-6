@@ -3,8 +3,11 @@ package com.dao;
 import java.sql.SQLException;
 
 import com.exception.CustomerNotFoundException;
+import com.exception.VendorNotFoundException;
 import com.model.Customer;
 import com.model.User;
+import com.model.Vendor;
+
 
 public interface AuthenticationDao {
 
@@ -21,5 +24,7 @@ public interface AuthenticationDao {
 	void updateUserPassword(String cEmail, String userPassword) throws SQLException;
 
 	void addVendor(String name, String email, String password,String address)throws SQLException;
+
+	Vendor getVendorId(String cEmail) throws SQLException, VendorNotFoundException;
 
 }

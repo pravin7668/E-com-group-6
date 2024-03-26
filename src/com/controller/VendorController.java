@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.exception.VendorNotFoundException;
 import com.model.Customer;
 import com.model.Vendor;
 
@@ -12,7 +13,7 @@ import com.service.*;
 
 public class VendorController {
 
-	public static void vendorController() {
+	public static void vendorController(Vendor vendor) {
 		VendorService vendorService = new VendorService();
 		Scanner sc = new Scanner(System.in);
 		List<Vendor> list = new ArrayList<Vendor>();
@@ -75,10 +76,9 @@ public class VendorController {
 				}
 				break;
 			case 3:
-				System.out.println("Enter Your Vendor ID ");
-				int uid=sc.nextInt();
-				sc.nextLine();
+				int uid=vendor.getId();
 				System.out.println("Enter Your Name");
+				sc.nextLine();
 				String vname=sc.nextLine();
 				System.out.println("Enter Your Price");
 				double vprice=sc.nextDouble();
@@ -98,11 +98,10 @@ public class VendorController {
 				
 				break;
 			case 4:
-				System.out.println("Enter Your Vendor ID ");
-				vid=sc.nextInt();
+				uid=vendor.getId();
 				try {
-					Vendor v = vendorService .displayProducts(vid);
-					System.out.println(v);
+					Vendor v = vendorService .displayProducts(uid);
+					System.out.println(v.getId2() + "  " + v.getName2() + "  " + v.getPrice()+"  "+v.getDescription()+" "+v.getStock_quantity());
 
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -115,8 +114,15 @@ public class VendorController {
 				System.out.println("Enter Your Vendor Name ");
 				name=sc.nextLine();
 				try {
-					Vendor v = vendorService.searchVendor(name);
-					System.out.println(v);
+					Vendor v;
+					try {
+						v = vendorService.searchVendor(name);
+						System.out.println(v.getId() + "  " + v.getName() + "  " + v.getEmail()+"  "+v.getPassword()+" "+v.getAddress());
+					} catch (VendorNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -128,8 +134,8 @@ public class VendorController {
 				
 				try {
 					list=vendorService.displayAllVendor();
-					for(Vendor c:list) {
-						System.out.println(c);
+					for(Vendor v:list) {
+						System.out.println(v.getId() + "  " + v.getName() + "  " + v.getEmail()+"  "+v.getPassword()+" "+v.getAddress());
 					}
 				}
 				catch(SQLException e) {

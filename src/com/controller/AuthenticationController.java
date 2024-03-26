@@ -4,8 +4,10 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import com.exception.CustomerNotFoundException;
+import com.exception.VendorNotFoundException;
 import com.model.Customer;
 import com.model.User;
+import com.model.Vendor;
 import com.service.AuthenticationService;
 
 public class AuthenticationController {
@@ -102,7 +104,7 @@ public class AuthenticationController {
 				try {
 					User user = authenticationService.validateEmail(cEmail);
 					Customer customer = authenticationService.getCustomerId(cEmail);
-
+					Vendor vendor=authenticationService.getVendorId(cEmail);;
 					System.out.println("Enter Your Password");
 					String userPassword = sc.nextLine();
 					boolean isUserPasswordCorrect = authenticationService.validatePassword(user, userPassword);
@@ -134,7 +136,7 @@ public class AuthenticationController {
 							}
 						}
 						if(user.getRole().equalsIgnoreCase("VENDOR")) {
-							VendorController.vendorController();
+								VendorController.vendorController(vendor);
 						}
 
 					}
@@ -182,7 +184,7 @@ public class AuthenticationController {
 						}
 
 					}
-				} catch (SQLException | CustomerNotFoundException e) {
+				} catch (SQLException | CustomerNotFoundException | VendorNotFoundException e) {
 					System.out.println(e.getMessage());
 				}
 
