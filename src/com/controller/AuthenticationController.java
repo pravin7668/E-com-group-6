@@ -61,6 +61,37 @@ public class AuthenticationController {
 				break;
 
 			case 2:
+				System.out.println("Enter Your Name");
+				sc.nextLine();
+				 name = sc.nextLine();
+				System.out.println("Enter your Email ");
+				email = sc.nextLine();
+				System.out.println("Enter your Address ");
+				String address = sc.nextLine();
+
+				while (true) {
+					System.out.println("Enter your Password");
+					String password = sc.nextLine();
+					System.out.println("Enter Confirm Password");
+					String confirmPassword = sc.nextLine();
+					boolean confirmPasswordCorrect = authenticationService.checkConfirmPassword(password,
+							confirmPassword);
+					if (confirmPasswordCorrect) {
+						System.out.println("Sign Up Completed....You Can Login :)");
+						System.out.println();
+						try {
+							String role = "VENDOR";
+							authenticationService.addUser(email, password, role);
+							authenticationService.addVendor(name, email, password,address);
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						break;
+					} else {
+						System.out.println("Password and Confirm Password Mismatch");
+
+					}
+				}
 				break;
 
 			case 3:
@@ -107,6 +138,9 @@ public class AuthenticationController {
 								}
 
 							}
+						}
+						if(user.getRole().equalsIgnoreCase("VENDOR")) {
+							VendorController.vendorController();
 						}
 
 					}

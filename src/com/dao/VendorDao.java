@@ -7,27 +7,27 @@ import com.model.Vendor;
 
 public interface VendorDao {
 
-	public void insertvendor(String name, String email, String password, String address) throws SQLException;
+	public void insertVendor(String name, String email, String password, String address) throws SQLException;
 		
 		
 	
 
-	public void insertproduct(int vid, String pname, double price, String description, int stock_quantity)throws SQLException;
+	public void insertProduct(int vid, String pname, double price, String description, int stock_quantity)throws SQLException;
 		
 		
 	
-	public void updateproduct(int vid, String pname, double price, String description, int stock_quantity)throws SQLException;
+	public void updateProduct(int vid, String pname, double price, String description, int stock_quantity)throws SQLException;
 		
 	
 
-	public Vendor displayproducts(int vid)throws SQLException;
+	public Vendor displayProducts(int vid)throws SQLException;
 	
-	public List<Vendor> displayallvendor() throws SQLException;
+	public List<Vendor> displayAllVendor() throws SQLException;
 
 
 
 
-	public Vendor searchvendor(String name) throws SQLException;
+	public Vendor searchVendor(String name) throws SQLException;
 		
 		
 	

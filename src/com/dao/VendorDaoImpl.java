@@ -13,7 +13,7 @@ import com.util.DBUtil;
 
 public class VendorDaoImpl implements VendorDao {
 	@Override
-	public void insertvendor(String name, String email, String password,String address) throws SQLException {
+	public void insertVendor(String name, String email, String password,String address) throws SQLException {
 		Connection conn=DBUtil.getDBConn();
 		String sql="insert into vendor(name,email,password,address) values(?,?,?,?)";
 		PreparedStatement pstmt=conn.prepareStatement(sql);
@@ -27,7 +27,7 @@ public class VendorDaoImpl implements VendorDao {
 		DBUtil.dbClose();
 	}
 	@Override
-   public void insertproduct(int vid, String pname, double price, String description, int stock_quantity)throws SQLException {
+   public void insertProduct(int vid, String pname, double price, String description, int stock_quantity)throws SQLException {
 	   Connection conn=DBUtil.getDBConn();
 		String sql="insert into vendor(pname,price,description,stock_quantity) values(?,?,?,?) where vendor_id=?";
 		PreparedStatement pstmt=conn.prepareStatement(sql);
@@ -42,7 +42,7 @@ public class VendorDaoImpl implements VendorDao {
 		
 	}
    @Override
-   public void updateproduct(int vid, String pname, double price, String description, int stock_quantity)throws SQLException {
+   public void updateProduct(int vid, String pname, double price, String description, int stock_quantity)throws SQLException {
 	   Connection conn=DBUtil.getDBConn();
 		
 		String sql="update product set name = ?,price =?,description=?,stock_quantity=? where id =?";
@@ -57,7 +57,7 @@ public class VendorDaoImpl implements VendorDao {
 		DBUtil.dbClose();
 	}
 @Override
-public Vendor displayproducts(int id) throws SQLException {
+public Vendor displayProducts(int id) throws SQLException {
 	List<Vendor> list = new ArrayList<Vendor>();
 	Connection conn = DBUtil.getDBConn();
 
@@ -81,7 +81,7 @@ public Vendor displayproducts(int id) throws SQLException {
 	
 }
 @Override
-public List<Vendor> displayallvendor() throws SQLException {
+public List<Vendor> displayAllVendor() throws SQLException {
 	Connection conn = DBUtil.getDBConn();
 	List<Vendor> list = new ArrayList<Vendor>();
 	String sql = "select * from vendor";
@@ -106,7 +106,7 @@ public List<Vendor> displayallvendor() throws SQLException {
 	return list;
 }
 @Override
-public Vendor searchvendor(String name) throws SQLException {
+public Vendor searchVendor(String name) throws SQLException {
 	List<Vendor> list = new ArrayList<Vendor>();
 	Connection conn = DBUtil.getDBConn();
 

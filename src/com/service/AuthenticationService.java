@@ -50,4 +50,8 @@ public class AuthenticationService {
 		authenticationDao.updateUserPassword(cEmail, userPassword);
 	}
 
+	public void addVendor(String name, String email, String password,String address)throws SQLException{
+		authenticationDao.addVendor(name,email,password,address);
+	}
+
 }

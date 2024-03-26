@@ -109,4 +109,19 @@ public class AuthenticationDaoImpl implements AuthenticationDao{
 		DBUtil.dbClose();
 	}
 
+	@Override
+	public void addVendor(String name, String email, String password,String address) throws SQLException {
+		Connection conn=DBUtil.getDBConn();
+		String sql="insert into vendor(name,email,password,address) values(?,?,?,?)";
+		PreparedStatement pstmt=conn.prepareStatement(sql);
+		pstmt.setString(1, name);
+		pstmt.setString(2, email);
+		pstmt.setString(3, password);
+		pstmt.setString(4, address);
+		pstmt.executeUpdate();
+		
+		DBUtil.dbClose();
+		
+	}
+
 }

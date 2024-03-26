@@ -20,4 +20,6 @@ public interface AuthenticationDao {
 
 	void updateUserPassword(String cEmail, String userPassword) throws SQLException;
 
+	void addVendor(String name, String email, String password,String address)throws SQLException;
+
 }
