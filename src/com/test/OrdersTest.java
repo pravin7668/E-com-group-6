@@ -48,12 +48,13 @@ public class OrdersTest {
 	@Test
 	public void getOrderInRangeTest() {
 		//Use case "Valid Credentials"
+		int id=1;
 		 LocalDate date1 = LocalDate.parse("2024-01-01");
 	     LocalDate date2 = LocalDate.parse("2024-12-12");
 	     LocalDate date3 = LocalDate.parse("2024-01-01");
 	     Orders expectedValues=new Orders(30,1,1,300,"brooklyn",2,date3);
 	     try {
-	    	 Assert.assertEquals(expectedValues,ordersservice.getOrderInRange(date1,date2));
+	    	 Assert.assertEquals(expectedValues,ordersservice.getOrderInRange(id,date1,date2));
 	     }
 	     catch (SQLException e) {
 	    	 e.printStackTrace();
@@ -65,7 +66,7 @@ public class OrdersTest {
 	     LocalDate date6 = LocalDate.parse("2024-01-01");
 	     Orders invalidValues=new Orders(30,1,1,300,"brooklyn",2,date6);
 	     try {
-	    	 Assert.assertEquals(invalidValues,ordersservice.getOrderInRange(date4,date5));
+	    	 Assert.assertEquals(invalidValues,ordersservice.getOrderInRange(id,date4,date5));
 	     }
 	     catch (SQLException e) {
 	    	 System.out.println("Invalid Dates");
