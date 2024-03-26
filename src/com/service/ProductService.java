@@ -35,5 +35,24 @@ public class ProductService {
 		return pd.displaydescsortProductDetails();
 	}
 	
+	public void editProductDetails(String name1, double price1, String description1, int stockQuantity1,int vendorId1, int productId1)throws SQLException {
+		// TODO Auto-generated method stub
+		
+		 pd.editProductDetails(name1,price1,description1,stockQuantity1,vendorId1,productId1);
+	}
 
+	public void deleteProduct(int productId)throws SQLException {
+		// TODO Auto-generated method stub
+		pd.deleteProduct(productId);
+		
+	}
+
+
+
+
+	public void buyProductDetails(int productId) throws SQLException{
+		// TODO Auto-generated method stub
+		pd.buyProductDetails(productId);
+		
+	}
 }
