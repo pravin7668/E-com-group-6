@@ -18,5 +18,11 @@ public interface ProductDao {
 
 	List<Product> displaydescsortProductDetails()throws SQLException;
 
+	void editProductDetails(String name1, double price1, String description1, int stockQuantity1, int vendorId1, int productId1)throws SQLException;
+
+	void deleteProduct(int productId)throws SQLException;
+
+
+	void buyProductDetails(int productId)throws SQLException;
 
 }

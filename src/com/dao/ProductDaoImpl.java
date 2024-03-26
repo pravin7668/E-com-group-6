@@ -101,4 +101,46 @@ public class ProductDaoImpl implements ProductDao{
 			DBUtil.dbClose();
 			return list3;
 	}
+		@Override
+		public void editProductDetails(String name1, double price1, String description1, int stockQuantity1, int vendorId1, int productId1)
+				throws SQLException {
+			Connection conn=DBUtil.getDBConn();
+			/*List<Product> list3 = new ArrayList<>();*/
+			String sql = "update product set name=?,price=?,description=?,stock_quantity=?,vendor_id=? where id =?";
+			PreparedStatement pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1,name1);
+			pstmt.setDouble(2, price1);
+			pstmt.setString(3, description1);
+			pstmt.setInt(4,stockQuantity1);
+			pstmt.setInt(5, vendorId1);
+			pstmt.setInt(6, productId1);
+			pstmt.executeUpdate();
+			DBUtil.dbClose();
+			
+		}
+		
+		@Override
+		public void deleteProduct(int productId) throws SQLException {
+			// TODO Auto-generated method stub
+			Connection conn=DBUtil.getDBConn();
+			String sql = "delete from product where id = ?";
+			PreparedStatement pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1,productId);
+			pstmt.executeUpdate();
+			DBUtil.dbClose();
+		}
+
+
+		@Override
+		public void buyProductDetails(int productId) throws SQLException {
+			// TODO Auto-generated method stub
+			Connection conn=DBUtil.getDBConn();
+			String sql = "update product SET stock_quantity = stock_quantity - 1 WHERE id = ?";
+			PreparedStatement pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1,productId);
+			pstmt.executeUpdate();
+			DBUtil.dbClose();
+			
+		}	
 }
