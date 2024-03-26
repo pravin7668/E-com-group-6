@@ -8,11 +8,13 @@ import com.exception.VendorNotFoundException;
 import com.model.Customer;
 import com.model.User;
 import com.model.Vendor;
+import com.model.Orders;
 import com.service.AuthenticationService;
 
 public class AuthenticationController {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
+		//Orders order=Customer customer;
 
 		AuthenticationService authenticationService = new AuthenticationService();
 		while (true) {
@@ -134,6 +136,7 @@ public class AuthenticationController {
 								case 2:
 									break;
 								case 3:
+									OrdersController.ordersController(customer);
 									break;
 								case 4:
 									break;

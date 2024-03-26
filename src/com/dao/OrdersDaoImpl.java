@@ -53,38 +53,44 @@ public class OrdersDaoImpl implements OrdersDao{
 
 		
 	}
-	public List<Product> fetchAllProducts(){
-		return null;
-	
-	}
 
 	public void insertOrder(int customerId, int productId, double totalPrice, String address, int numOfItems,
 			LocalDate now) throws SQLException {
-		Connection conn=DBUtil.getDBConn();
+		try {
+			Connection conn=DBUtil.getDBConn();
 
-		String sql="insert into booking values(?,?,?,?,?)";
-		PreparedStatement pstmt=conn.prepareStatement(sql);
-		pstmt.setInt(1,customerId);
-		pstmt.setInt(2,productId);
-		pstmt.setDouble(3,totalPrice);
-		pstmt.setString(4,address);
-		pstmt.setInt(5,numOfItems);
-		pstmt.setString(6, now.toString());
-		pstmt.executeUpdate();
-	
-		DBUtil.dbClose();
+			String sql="insert into booking values(?,?,?,?,?)";
+			PreparedStatement pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1,customerId);
+			pstmt.setInt(2,productId);
+			pstmt.setDouble(3,totalPrice);
+			pstmt.setString(4,address);
+			pstmt.setInt(5,numOfItems);
+			pstmt.setString(6, now.toString());
+			pstmt.executeUpdate();
+
+			DBUtil.dbClose();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
 	public void updateAvailableProduct(int productId, int i) throws SQLException {
-		Connection conn=DBUtil.getDBConn();
-		String sql="update product set stock_quantity=? where id=?";
-		PreparedStatement pstmt=conn.prepareStatement(sql);
-		pstmt.setInt(1,i);
-		pstmt.setInt(2, productId);
-		pstmt.executeUpdate();
-		
-		DBUtil.dbClose();
+		try {
+			Connection conn=DBUtil.getDBConn();
+			String sql="update product set stock_quantity=? where id=?";
+			PreparedStatement pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1,i);
+			pstmt.setInt(2, productId);
+			pstmt.executeUpdate();
+			
+			DBUtil.dbClose();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -106,13 +112,14 @@ public class OrdersDaoImpl implements OrdersDao{
 		return orderList;
 	}
 	
-	public List<Orders> getOrderInRange(LocalDate startDate, LocalDate endDate) throws SQLException {
+	public List<Orders> getOrderInRange(int i,LocalDate startDate, LocalDate endDate) throws SQLException {
 		  Connection conn = DBUtil.getDBConn();
 		  try {
-		    String sql = "SELECT * FROM orders WHERE order_date BETWEEN ? AND ?";
+		    String sql = "SELECT * FROM orders WHERE order_date BETWEEN ? AND ? having customer_id=?";
 		    PreparedStatement pstmt = conn.prepareStatement(sql);
 		    pstmt.setDate(1,java.sql.Date.valueOf(startDate) );
 		    pstmt.setDate(2,java.sql.Date.valueOf(endDate));
+		    pstmt.setInt(3,i);
 
 		    ResultSet rs = pstmt.executeQuery();
 		    List<Orders> ordersList = new ArrayList<>();
@@ -128,6 +135,23 @@ public class OrdersDaoImpl implements OrdersDao{
 		    DBUtil.dbClose();
 		  }
 		}
+	
+	public void updateAddress(int i, String address) throws SQLException {
+		try {
+			Connection conn=DBUtil.getDBConn();
+			String sql="Update orders set shipping_address=? where customer_id=?";
+			PreparedStatement pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, address);
+			pstmt.setInt(1, i);
+			pstmt.executeUpdate();
+			
+			DBUtil.dbClose();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 
 	

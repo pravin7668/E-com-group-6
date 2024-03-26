@@ -21,9 +21,9 @@ public interface OrdersDao {
 
 	public Customer validateCustomer(int customerId) throws InvalidIdException, SQLException;
 
-	public List<Product> fetchAllProducts();
+	public List<Orders> getOrderInRange(int i, LocalDate startDate, LocalDate endDate) throws SQLException;
 
-	public List<Orders> getOrderInRange(LocalDate startDate, LocalDate endDate) throws SQLException;
+	public void updateAddress(int i, String address) throws SQLException;
 	
 	
 }

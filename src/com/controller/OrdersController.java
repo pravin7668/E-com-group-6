@@ -11,9 +11,11 @@ import com.model.Customer;
 import com.model.Orders;
 import com.model.Product;
 import com.service.OrdersService;
+import com.service.ProductService;
 
 public class OrdersController {
-	public static void main(String[] args) throws SQLException  {
+	public static void ordersController(Customer customer) throws SQLException  {
+		ProductService ps = new ProductService();
 		OrdersService ordersService = new OrdersService();
 
 		Scanner sc = new Scanner(System.in);
@@ -22,7 +24,7 @@ public class OrdersController {
 				System.out.println("Press 1 to Get Orders by Customer Id");
 				System.out.println("Press 2 to Order items");
 				System.out.println("Press 3 to Get Orders by Product Id");
-				System.out.println("Press 4 to Update Order item");
+				System.out.println("Press 4 to Update Order Address");
 				System.out.println("Press 5 to Display Orders by date range");
 				System.out.println("Press 0 to Exit");
 				System.out.println("********************************************");
@@ -33,11 +35,9 @@ public class OrdersController {
 				}
 				switch (input) {
 				case 1://ORDERS BY CUSTOMER ID
-					System.out.println("Enter your Customer ID ");
-					int cid = sc.nextInt();
 					List<Orders> list = new ArrayList<Orders>();
 					try {
-						list = ordersService.getOrderDetailsOfCustomer(cid);
+						list = ordersService.getOrderDetailsOfCustomer(customer.getId());
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -49,12 +49,10 @@ public class OrdersController {
 					break;
 					
 				case 2://ORDER ITEMS
-					System.out.println("Enter your Customer Id ");
-					int customerId = sc.nextInt();
 				try {
-					Customer c = ordersService.validateCustomer(customerId);
+					Customer c = ordersService.validateCustomer(customer.getId());
 					
-					List<Product> list2 = ordersService.fetchAllProducts();
+					List<Product> list2 = ps.displayProductDetails();
 
 					for (Product e : list2) {
 						System.out.println(e.getId() + "   " + e.getName()+"   "+e.getDescription()+"    "+"Available stock   "+e.getStockQuantity()+"Price/product"+"   "+e.getPrice());
@@ -63,6 +61,7 @@ public class OrdersController {
 					int productId = sc.nextInt();
 					System.out.println("Enter number of Product you want to Buy  ");
 					int numOfItems = sc.nextInt();
+					sc.nextLine();
 					System.out.println("Enter Address:  ");
 					String address = sc.nextLine();
 					boolean productAvailable=ordersService.checkIfProductAvailable(list2,numOfItems,productId);
@@ -70,7 +69,7 @@ public class OrdersController {
 						System.out.println("Product Unavailable");
 						break;
 					}
-					ordersService.insertOrder(productId,customerId,numOfItems,address,list2);
+					ordersService.insertOrder(productId,customer.getId(),numOfItems,address,list2);
 					System.out.println("Ticket Booked Successfully");
 					ordersService.updateAvailableProduct(list2,productId,numOfItems);
 				}
@@ -95,9 +94,17 @@ public class OrdersController {
 					break;
 					
 				case 4://UPDATE ORDER
-				
-					
-					
+					System.out.println("Enter New Shipping Address ");
+					sc.nextLine();
+					String address = sc.nextLine();
+					        try {
+					        	ordersService.updateAddress(customer.getId(),address);
+					            System.out.println("Shipping Address Updated Successfully");
+					        } catch (SQLException e) {
+					            e.printStackTrace();
+					        }
+					 break;
+					  
 					
 				case 5:// ORDERS FROM DATE RANGE
 					System.out.println("Enter a Start date in YYYY-MM-DD format: ");
@@ -108,7 +115,7 @@ public class OrdersController {
 				      LocalDate date1 = LocalDate.parse(startDate);
 				      LocalDate date2 = LocalDate.parse(endDate);
 					List<Orders> list3=new ArrayList<Orders>();
-					list3 = ordersService.getOrderInRange(date1,date2);
+					list3 = ordersService.getOrderInRange(customer.getId(),date1,date2);
 					for (Orders od : list3) {
 						System.out.println(od.getId() + " " + od.getCustomerId() + " " + od.getTotalPrice() + " "
 								+ od.getQuantity());

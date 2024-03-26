@@ -27,12 +27,7 @@ public class OrdersService {
 			return ordersdao.validateCustomer(customerId);
 		
 		}
-
-
-	public List<Product> fetchAllProducts() throws SQLException {
-		
-		return pd.displayProductDetails();
-	}
+	
 
 	public boolean checkIfProductAvailable(List<Product> list2, int numOfItems, int productId) {
 		for (Product e:list2) {
@@ -72,12 +67,20 @@ public class OrdersService {
 		return list1;
 	}
 
-	public List<Orders> getOrderInRange(LocalDate startDate, LocalDate endDate) throws SQLException {
+	public List<Orders> getOrderInRange(int i, LocalDate startDate, LocalDate endDate) throws SQLException {
 		List<Orders> list3=new ArrayList<Orders>();
-		list3 = ordersdao.getOrderInRange(startDate,endDate);
+		list3 = ordersdao.getOrderInRange(i,startDate,endDate);
 		return list3;
 	}
 
+	public void updateAddress(int i, String address) throws SQLException {
+		ordersdao.updateAddress(i,address);
+		
+	}
+
+	
+	
+	
 
 
 
