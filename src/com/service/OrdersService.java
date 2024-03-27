@@ -17,10 +17,8 @@ import com.exception.InvalidIdException;
 public class OrdersService {
 	OrdersDao ordersdao=new OrdersDaoImpl();
 	ProductDao pd = new ProductDaoImpl();
-	public List<Orders> getOrderDetailsOfCustomer(int cid) throws SQLException {
-		List<Orders> list=new ArrayList<Orders>();
-		list=ordersdao.getOrderDetailsOfCustomer(cid);
-		return list;
+	public List<Orders> getOrderDetailsOfCustomer(int cid) throws SQLException{ 
+		return ordersdao.getOrderDetailsOfCustomer(cid);
 	}
 	
 	public Customer validateCustomer(int customerId)throws SQLException, InvalidIdException {
@@ -51,9 +49,11 @@ public class OrdersService {
 
 	public void insertOrder(int productId, int customerId, int numOfItems,String address, List<Product> list2) throws SQLException {
 		double totalPrice=0;
+		 LocalDate now = LocalDate.now();
 		for (Product e:list2) {
 			if(e.getId()==productId) {
 				totalPrice=(e.getPrice()*numOfItems);
+				ordersdao.insertOrder(customerId, productId, totalPrice, address, numOfItems,now);
 				break;
 			}
 		}
@@ -62,9 +62,7 @@ public class OrdersService {
 	}
 	
 	public List<Orders> getOrderDetailsByPID(int pid) throws SQLException {
-		List<Orders> list1=new ArrayList<Orders>();
-		list1=ordersdao.getOrderDetailsByPID(pid);
-		return list1;
+		return ordersdao.getOrderDetailsByPID(pid);
 	}
 
 	public List<Orders> getOrderInRange(int i, LocalDate startDate, LocalDate endDate) throws SQLException {

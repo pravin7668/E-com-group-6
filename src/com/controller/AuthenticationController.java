@@ -105,8 +105,8 @@ public class AuthenticationController {
 				String cEmail = sc.nextLine();
 				try {
 					User user = authenticationService.validateEmail(cEmail);
-					Customer customer = authenticationService.getCustomerId(cEmail);
-					Vendor vendor=authenticationService.getVendorId(cEmail);
+					
+					
 					System.out.println("Enter Your Password");
 					String userPassword = sc.nextLine();
 					boolean isUserPasswordCorrect = authenticationService.validatePassword(user, userPassword);
@@ -114,6 +114,7 @@ public class AuthenticationController {
 					if (isUserPasswordCorrect) {
 
 						if (user.getRole().equalsIgnoreCase("CUSTOMER")) {
+							Customer customer = authenticationService.getCustomerId(cEmail);
 							while (true) {
 								System.out.println();
 								System.out.println("***OPERATIONS FOR CUSTOMER***");
@@ -145,6 +146,7 @@ public class AuthenticationController {
 							}
 						}
 						if(user.getRole().equalsIgnoreCase("VENDOR")) {
+							Vendor vendor=authenticationService.getVendorId(cEmail);
 								VendorController.vendorController(vendor);
 						}
 
@@ -185,6 +187,7 @@ public class AuthenticationController {
 
 							if (isUserPasswordCorrect) {
 								if (user.getRole().equalsIgnoreCase("CUSTOMER")) {
+									Customer customer = authenticationService.getCustomerId(cEmail);
 									CustomerController.customerController(customer);
 									break;
 								}

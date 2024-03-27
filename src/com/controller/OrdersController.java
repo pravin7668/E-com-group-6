@@ -19,7 +19,7 @@ public class OrdersController {
 		OrdersService ordersService = new OrdersService();
 
 		Scanner sc = new Scanner(System.in);
-			while (true) {
+			while(true) {
 				System.out.println("********* ORDERS OPS ***********");
 				System.out.println("Press 1 to Get Orders by Customer Id");
 				System.out.println("Press 2 to Order items");
@@ -28,12 +28,12 @@ public class OrdersController {
 				System.out.println("Press 5 to Display Orders by date range");
 				System.out.println("Press 0 to Exit");
 				System.out.println("********************************************");
-				int input = sc.nextInt();
-				if (input == 0) {
+				int input1 = sc.nextInt();
+				if (input1 == 0) {
 					System.out.println("Terminated");
 					break;
 				}
-				switch (input) {
+				switch(input1) {
 				case 1://ORDERS BY CUSTOMER ID
 					List<Orders> list = new ArrayList<Orders>();
 					try {
@@ -70,20 +70,21 @@ public class OrdersController {
 						break;
 					}
 					ordersService.insertOrder(productId,customer.getId(),numOfItems,address,list2);
-					System.out.println("Ticket Booked Successfully");
+					System.out.println("Ordered Successfully");
 					ordersService.updateAvailableProduct(list2,productId,numOfItems);
 				}
 				catch (SQLException | InvalidIdException e) {
 					System.out.println(e.getMessage());
 					
 				}
+				break;
 				
 				case 3:// ORDERS BY PRODUCT ID
 					System.out.println("Enter Product ID ");
 					int pid = sc.nextInt();
-					List<Orders> list1 = new ArrayList<Orders>();
+					List<Orders> list1 = new ArrayList<>();
 					try {
-						list = ordersService.getOrderDetailsOfCustomer(pid);
+					list1 = ordersService.getOrderDetailsByPID(pid);
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -103,10 +104,11 @@ public class OrdersController {
 					        } catch (SQLException e) {
 					            e.printStackTrace();
 					        }
-					 break;
+					 break;	
 					  
 					
 				case 5:// ORDERS FROM DATE RANGE
+					sc.nextLine();
 					System.out.println("Enter a Start date in YYYY-MM-DD format: ");
 				    String startDate = sc.nextLine();
 				    System.out.println("Enter a End date in YYYY-MM-DD format: ");
@@ -116,6 +118,7 @@ public class OrdersController {
 				      LocalDate date2 = LocalDate.parse(endDate);
 					List<Orders> list3=new ArrayList<Orders>();
 					list3 = ordersService.getOrderInRange(customer.getId(),date1,date2);
+					System.out.println("ID    Customer ID    TotalPrice    Quantity");
 					for (Orders od : list3) {
 						System.out.println(od.getId() + " " + od.getCustomerId() + " " + od.getTotalPrice() + " "
 								+ od.getQuantity());

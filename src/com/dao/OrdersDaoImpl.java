@@ -31,15 +31,16 @@ public class OrdersDaoImpl implements OrdersDao{
 			int customerId = rst.getInt("customer_id");
 			int productId = rst.getInt("product_id");
 			Double price = rst.getDouble("total_price");
-			String address = rst.getString("address");
+			String address = rst.getString("shipping_address");
 			int quantity = rst.getInt("quantity");
-			Date date = rst.getDate("order_date");
-			/*save it in an object*/
-			Instant instant = date.toInstant();
-
-	        // Convert Instant to LocalDate
-	        LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
-			Orders od = new Orders(Id,customerId,productId,price,address,quantity,localDate);
+	        
+			Orders od = new Orders();
+			od.setId(Id);
+			od.setCustomerId(customerId);
+			od.setProductId(productId);
+			od.setTotalPrice(price);
+			od.setShippingAddress(address);
+			od.setQuantity(quantity);
 			list.add(od);
 		}
 		DBUtil.dbClose();
@@ -66,28 +67,28 @@ public class OrdersDaoImpl implements OrdersDao{
 		
 	}
 
-	public void insertOrder(int customerId, int productId, double totalPrice, String address, int numOfItems,
-			LocalDate now) throws SQLException {
-		try {
+	public void insertOrder(int customerId, int productId, double totalPrice, String address, int numOfItems, LocalDate now) throws SQLException {
 			Connection conn=DBUtil.getDBConn();
+	
 
-			String sql="insert into booking values(?,?,?,?,?)";
-			PreparedStatement pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1,customerId);
-			pstmt.setInt(2,productId);
-			pstmt.setDouble(3,totalPrice);
-			pstmt.setString(4,address);
-			pstmt.setInt(5,numOfItems);
-			pstmt.setString(6, now.toString());
-			pstmt.executeUpdate();
+	        String sql = "insert into orders(customer_id,product_id,total_price,shipping_address,quantity,order_date) values(?,?,?,?,?,?)";
+	        try {
+	            PreparedStatement pstmt = conn.prepareStatement(sql);
+	            pstmt.setInt(1, customerId);
+	            pstmt.setInt(2, productId);
+	            pstmt.setDouble(3, totalPrice);
+	            pstmt.setString(4, address);
+	            pstmt.setInt(5, numOfItems);
+	            Date sqlDate = Date.valueOf(now);
+	            pstmt.setDate(6, sqlDate); 
+	            pstmt.executeUpdate();
 
 			DBUtil.dbClose();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
+	
 
 	public void updateAvailableProduct(int productId, int i) throws SQLException {
 		try {
@@ -109,20 +110,28 @@ public class OrdersDaoImpl implements OrdersDao{
 	public List<Orders> getOrderDetailsByPID(int pid) throws SQLException {
 		
 		Connection conn=DBUtil.getDBConn();
-		String sql="Select id,customer_id,total_price,quantity from  where product_id=?";
+		String sql="Select id,customer_id,total_price,quantity from orders where product_id=?";
 		PreparedStatement pstmt=conn.prepareStatement(sql);
 		pstmt.setInt(1, pid);
-		ResultSet rs=pstmt.executeQuery();
-		List<Orders> orderList=new ArrayList<>();
-		
-		while(rs.next()) {
-			Orders order =new Orders();
-			order.setId(rs.getInt(pid));
-			orderList.add(order);
-		}
+		List<Orders> orderList = new ArrayList<>();
+		ResultSet rst = pstmt.executeQuery();
+		while (rst.next()) { 
+			int Id= rst.getInt("id");
+			int customerId = rst.getInt("customer_id");
+			Double price = rst.getDouble("total_price");
+			int quantity = rst.getInt("quantity");
+			
+			Orders od = new Orders();
+			od.setId(Id);
+			od.setCustomerId(customerId);
+			od.setTotalPrice(price);
+			od.setQuantity(quantity);
+			orderList.add(od);
+			
+	}
 		DBUtil.dbClose();
 		return orderList;
-	}
+		}
 	
 	public List<Orders> getOrderInRange(int i,LocalDate startDate, LocalDate endDate) throws SQLException {
 		  Connection conn = DBUtil.getDBConn();
@@ -154,16 +163,18 @@ public class OrdersDaoImpl implements OrdersDao{
 			String sql="Update orders set shipping_address=? where customer_id=?";
 			PreparedStatement pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, address);
-			pstmt.setInt(1, i);
+			pstmt.setInt(2, i);
 			pstmt.executeUpdate();
 			
 			DBUtil.dbClose();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
 	}
+	
+	
 	
 
 	
