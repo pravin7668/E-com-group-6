@@ -43,7 +43,7 @@ public class OrdersController {
 						e.printStackTrace();
 					}
 					for (Orders od : list) {
-						System.out.println(od.getId() + " " + od.getProductId() + " " + od.getTotalPrice() + " "
+						System.out.println(od.getId() +" " + od.getCustomerId()+ " " + od.getProductId() +" " + od.getShippingAddress()+" " + od.getQuantity()+" " + od.getProductId() +" " + od.getOrderDate() + " "
 								+ od.getQuantity());
 					}
 					break;

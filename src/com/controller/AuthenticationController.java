@@ -106,7 +106,7 @@ public class AuthenticationController {
 				try {
 					User user = authenticationService.validateEmail(cEmail);
 					Customer customer = authenticationService.getCustomerId(cEmail);
-					Vendor vendor=authenticationService.getVendorId(cEmail);;
+					Vendor vendor=authenticationService.getVendorId(cEmail);
 					System.out.println("Enter Your Password");
 					String userPassword = sc.nextLine();
 					boolean isUserPasswordCorrect = authenticationService.validatePassword(user, userPassword);

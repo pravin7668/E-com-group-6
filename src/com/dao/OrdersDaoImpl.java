@@ -1,17 +1,19 @@
 package com.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.exception.InvalidIdException;
 import com.model.Customer;
 import com.model.Orders;
-import com.model.Product;
 import com.util.DBUtil;
 
 
@@ -19,19 +21,29 @@ public class OrdersDaoImpl implements OrdersDao{
 	
 	public List<Orders> getOrderDetailsOfCustomer(int cid) throws SQLException {
 		Connection conn=DBUtil.getDBConn();
-		String sql="Select id,product_id,total_price,quantity from customer where customer_id=?";
+		List<Orders> list = new ArrayList<>();
+		String sql = "select * from orders where customer_id=?";
 		PreparedStatement pstmt=conn.prepareStatement(sql);
 		pstmt.setInt(1, cid);
-		ResultSet rs=pstmt.executeQuery();
-		List<Orders> orderList=new ArrayList<>();
-		
-		while(rs.next()) {
-			Orders order =new Orders();
-			order.setId(rs.getInt(cid));
-			orderList.add(order);
+		ResultSet rst = pstmt.executeQuery();
+		while (rst.next()) { 
+			int Id= rst.getInt("id");
+			int customerId = rst.getInt("customer_id");
+			int productId = rst.getInt("product_id");
+			Double price = rst.getDouble("total_price");
+			String address = rst.getString("address");
+			int quantity = rst.getInt("quantity");
+			Date date = rst.getDate("order_date");
+			/*save it in an object*/
+			Instant instant = date.toInstant();
+
+	        // Convert Instant to LocalDate
+	        LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+			Orders od = new Orders(Id,customerId,productId,price,address,quantity,localDate);
+			list.add(od);
 		}
 		DBUtil.dbClose();
-		return orderList;
+		return list;
 	}
 // CASE 2:	
 	public Customer validateCustomer(int customerId) throws InvalidIdException, SQLException {

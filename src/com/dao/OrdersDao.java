@@ -7,7 +7,7 @@ import java.util.List;
 import com.exception.InvalidIdException;
 import com.model.Customer;
 import com.model.Orders;
-import com.model.Product;
+
 
 public interface OrdersDao {
 	public List<Orders> getOrderDetailsOfCustomer(int cid)throws SQLException;
